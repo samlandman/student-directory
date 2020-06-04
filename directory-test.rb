@@ -37,9 +37,16 @@ def input_students
   students = []
   #get first name
   name = gets.chomp
+  #gets DOB
+
   #while the name is not empty, repeat this code
   while !name.empty? do
-    students << {name: name, cohort: :november}
+    puts "Their Date of birth?"
+    dob = gets.chomp
+    #Gets Hobbies
+    puts "Any hobbies? Please split by comma"
+    hobbies = gets.chomp.split(",")
+    students << {name: name, cohort: :november,  DOB: dob, hobbies: hobbies }
     puts "Now we have #{students.count} students"
     name = gets.chomp
   end
@@ -74,10 +81,10 @@ def print_if_letter_usingloop(students)
   end
 end
 
-#students = input_students
+students = input_students
 print_header
-#list(students)
-#print_footer(students)
+list(students)
+print_footer(students)
 #print_if_letter(students)
 #characters_less_12(students)
-print_if_letter_usingloop(students)
+#print_if_letter_usingloop(students)
