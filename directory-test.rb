@@ -57,8 +57,18 @@ def print_if_letter(students)
   end
 end
 
+def characters_less_12(students)
+  puts "\n\nThose with characters less than 12 are as follows:\n"
+  students.each_with_index do |student,index|
+    if student[:name].length < 12
+      puts "#{index+1}. #{student[:name]} (#{student[:cohort]})}"
+    end
+  end
+end
+
 #students = input_students
 print_header
 list(students)
 print_footer(students)
-print_if_letter(students)
+#print_if_letter(students)
+characters_less_12(students)
