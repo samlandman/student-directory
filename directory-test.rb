@@ -26,13 +26,14 @@ end
 #We print the total number of students
 def print_footer(names)
   print "Overall, we have #{names.count} great students"
+  #\n can be used to create a new line
+  # print "line1\nline2\nline3"
 end
-#\n can be used to create a new line
-# print "line1\nline2\nline3"
+
 
 def input_students
-  puts "Please enter the names of the students"
-  puts "To finish, just hit return twice"
+  puts "\n Please enter the names of the students"
+  puts "\n To finish, just hit return twice \n"
   #create an empty array
   students = []
   #get first name
@@ -41,16 +42,26 @@ def input_students
 
   #while the name is not empty, repeat this code
   while !name.empty? do
+    puts "Which cohort are you in?"
+    cohort = gets.chomp
+    if cohort.empty?
+      cohort = :november
+      else
+      cohort = cohort.tosym
+    end
+
     puts "Their Date of birth?"
     dob = gets.chomp
     #Gets Hobbies
     puts "Any hobbies? Please split by comma"
     hobbies = gets.chomp.split(",")
-    students << {name: name, cohort: :november,  DOB: dob, hobbies: hobbies }
-    puts "Now we have #{students.count} students"
+    students << {name: name, cohort: cohort,  DOB: dob, hobbies: hobbies }
+    puts "\n Welcome, #{name.split(" ")[0]}!"
+    puts "\n Now we have #{students.count} #{students.count > 1? "students" : "student"}"
+    puts "\n Please enter the names of the students"
     name = gets.chomp
   end
-  students
+  puts students
 end
 
 def print_if_letter(students)
