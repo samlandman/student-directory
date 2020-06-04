@@ -18,8 +18,8 @@ def print_header
 end
 
 def list(students)
-  students.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+  students.each_with_index do |student, index|
+    puts "#{index+1}. #{student[:name]}  (#{student[:cohort]} cohort)"
   end
 end
 
@@ -34,19 +34,31 @@ def input_students
   puts "Please enter the names of the students"
   puts "To finish, just hit return twice"
   #create an empty array
-  students_1 = []
+  students = []
   #get first name
   name = gets.chomp
   #while the name is not empty, repeat this code
   while !name.empty? do
-    students_1 << {name: name, cohort: :november}
-    puts "Now we have #{students_1.count} students"
+    students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
     name = gets.chomp
   end
-  students_1
+  students
 end
 
-students = input_students
-center(print_header)
+def print_if_letter(students)
+  puts "\nWhat letter do you want to sort by?"
+  letter = gets.chomp
+  students.each_with_index do |student,index|
+    if student[:name].to_str[0].downcase == letter.downcase
+      puts "#{index+1}. #{student[:name]}  (#{student[:cohort]} cohort)"
+    else
+    end
+  end
+end
+
+#students = input_students
+print_header
 list(students)
 print_footer(students)
+print_if_letter(students)
