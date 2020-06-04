@@ -1,7 +1,7 @@
 students = [
 {name: "Dr. Hannibal Lecter", cohort: :november},
 {name: "Darth Vader", cohort: :november},
-{name: "Nurse Ratched", cohort: :november},
+{name: "Nurse Ratched", cohort: :october},
 {name: "Michael Corleone", cohort: :november},
 {name: "Alex DeLarge", cohort: :november},
 {name: "The Wicked Witch of the West", cohort: :november},
@@ -92,10 +92,27 @@ def print_if_letter_usingloop(students)
   end
 end
 
-students = input_students
+def cohorts(students)
+  puts "\n"
+  cohorts = students.map{|student| student[:cohort]}.uniq
+
+  cohorts.each do |cohort|
+    puts "\n"
+    puts cohort
+    puts "\n"
+
+    students.each do |student|
+      if  cohort == student[:cohort]
+      puts student[:name]
+      end
+    end
+  end
+end
+#students = input_students
 print_header
 list(students)
 print_footer(students)
 #print_if_letter(students)
 #characters_less_12(students)
 #print_if_letter_usingloop(students)
+cohorts(students)
