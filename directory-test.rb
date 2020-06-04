@@ -66,9 +66,18 @@ def characters_less_12(students)
   end
 end
 
+def print_if_letter_usingloop(students)
+  i = 0
+  until i == students.count
+    puts "#{i+1}. #{students[i][:name]}  (#{students[i][:cohort]} cohort)"
+    i += 1
+  end
+end
+
 #students = input_students
 print_header
-list(students)
-print_footer(students)
+#list(students)
+#print_footer(students)
 #print_if_letter(students)
-characters_less_12(students)
+#characters_less_12(students)
+print_if_letter_usingloop(students)
