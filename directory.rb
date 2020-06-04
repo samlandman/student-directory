@@ -47,6 +47,6 @@ def input_students
 end
 
 students = input_students
-center(print_header)
+print_header
 list(students)
 print_footer(students)
