@@ -29,6 +29,24 @@ def print_footer(names)
 end
 #\n can be used to create a new line
 # print "line1\nline2\nline3"
+
+def input_students
+  puts "Please enter the names of the students"
+  puts "To finish, just hit return twice"
+  #create an empty array
+  students_1 = []
+  #get first name
+  name = gets.chomp
+  #while the name is not empty, repeat this code
+  while !name.empty? do
+    students_1 << {name: name, cohort: :november}
+    puts "Now we have #{students_1.count} students"
+    name = gets.chomp
+  end
+  students_1
+end
+
+students = input_students
 print_header
 list(students)
 print_footer(students)
