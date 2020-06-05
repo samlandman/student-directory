@@ -27,23 +27,23 @@ def input_students
   puts "\n Please enter the names of the students"
   puts "\n To finish, just hit return twice \n"
   #get first name
-  name = gets.chomp
-  #gets DOB
+  name = STDIN.gets.chomp
+  #STDIN.gets DOB
 
   #while the name is not empty, repeat this code
   while !name.empty? do
     puts "Which cohort are you in?"
-    cohort = gets.chomp
+    cohort = STDIN.gets.chomp
     if cohort.empty?
       cohort = :november
       else
     end
-    #Gets DOB
+    #STDIN.gets DOB
     puts "Their Date of birth?"
-    dob = gets.chomp
-    #Gets Hobbies
+    dob = STDIN.gets.chomp
+    #STDIN.gets Hobbies
     puts "Any hobbies? Please split by comma"
-    hobbies = gets.chomp.split(",")
+    hobbies = STDIN.gets.chomp.split(",")
     @students <<
       { name: name,
         cohort: cohort,
@@ -53,13 +53,13 @@ def input_students
     puts "\n Welcome, #{name.split(" ")[0]}!"
     puts "\n Now we have #{@students.count} #{@students.count > 1? "students" : "student"}"
     puts "\n Please enter the names of the students"
-    name = gets.chomp
+    name = STDIN.gets.chomp
   end
 end
 
 def print_if_letter(students)
   puts "\nWhat letter do you want to sort by?"
-  letter = gets.chomp
+  letter = STDIN.gets.chomp
   students.each_with_index do |student,index|
     if student[:name].to_str[0].downcase == letter.downcase
       puts "#{index+1}. #{student[:name]}  (#{student[:cohort]} cohort)"
@@ -146,13 +146,25 @@ def save_students
   file.close
 end
 
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
   end
   file.close
+end
+
+def try_load_students
+  filename = ARGV.first # first argument from the command line
+  return if filename.nil?
+  if File.exists?(filename)
+    load_students(filename)
+    puts "Loaded #{@students.count} from #{filename}"
+  else #if it doesn't exist
+    puts "Sorry, #{filename} does not exist"
+    exit #quit the program
+  end
 end
 
 def interactive_menu
@@ -161,7 +173,7 @@ def interactive_menu
     print_menu
     #2. read the input and save it into a variable
     #3. do what the user has asked
-    process(gets.chomp)
+    process(STDIN.gets.chomp)
     #4. repeat from step1
   end
 end
@@ -173,5 +185,5 @@ end
 #characters_less_12(students)
 #print_if_letter_usingloop(students)
 #cohorts(students)
-
+try_load_students
 interactive_menu
