@@ -1,4 +1,5 @@
 @students = []
+@menu = ["1. Input the students", "2. Show the students","3. Save the list to students.csv", "4. Load the list from students.csv","9. Exit"]
 
 #first we print the list of students
 def print_header
@@ -16,11 +17,20 @@ end
 def print_footer
   if @students == []
   else
-  print "\n Overall, we have #{@students.count} great #{@students.count > 1? "students" : "student"}"
+  print "\n Overall, we have #{@students.count} great #{multiple_students}"
   end
   #\n can be used to create a new line
   # print "line1\nline2\nline3"
 end
+
+def multiple_students
+  if @students.count > 1
+  "students"
+  else
+  "student"
+  end
+end
+
 
 
 def input_students
@@ -46,7 +56,7 @@ def input_students
     hobbies = STDIN.gets.chomp.split(",")
     push_student_name_cohort(name, cohort)
     puts "\n Welcome, #{name.split(" ")[0]}!"
-    puts "\n Now we have #{@students.count} #{@students.count > 1? "students" : "student"}"
+    puts "\n Now we have #{@students.count} #{multiple_students}"
     puts "\n Please enter the names of the students"
     name = STDIN.gets.chomp
   end
@@ -99,11 +109,9 @@ end
 
 def print_menu
   puts "\n"
-  puts " 1. Input the students"
-  puts "2. Show the students"
-  puts "3. Save the list to students.csv"
-  puts "4. Load the list from students.csv"
-  puts "9. Exit"
+  @menu.each do |item|
+    puts item
+  end
 end
 
 def show_students
@@ -113,6 +121,7 @@ def show_students
 end
 
 def process(selection)
+  selection == "9" ? exit : puts("You chose: \n #{@menu[selection.to_i-1]}")
   case selection
   when "1"
     input_students
@@ -122,8 +131,6 @@ def process(selection)
     save_students
   when "4"
     load_students
-  when "9"
-    exit
   else
     puts "I don't know what you meant, try again"
   end
