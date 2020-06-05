@@ -18,29 +18,26 @@ def print_header
   puts "--------------------"
 end
 
-def list(students)
-  puts students
-  students.each_with_index do |student,index|
+def list
+  @students.each_with_index do |student,index|
     puts "#{index+1}. #{student[:name]}  (#{student[:cohort]} cohort)"
   end
 end
 
 #We print the total number of students
-def print_footer(students)
-  if students == []
+def print_footer
+  if @students == []
   else
-  print "\n Overall, we have #{students.count} great students"
+  print "\n Overall, we have #{@students.count} great #{@students.count > 1? "students" : "student"}"
   end
   #\n can be used to create a new line
   # print "line1\nline2\nline3"
 end
 
 
-def input_students(students)
+def input_students
   puts "\n Please enter the names of the students"
   puts "\n To finish, just hit return twice \n"
-  #create an empty array
-  students = []
   #get first name
   name = gets.chomp
   #gets DOB
@@ -53,19 +50,23 @@ def input_students(students)
       cohort = :november
       else
     end
-
+    #Gets DOB
     puts "Their Date of birth?"
     dob = gets.chomp
     #Gets Hobbies
     puts "Any hobbies? Please split by comma"
     hobbies = gets.chomp.split(",")
-    students << {name: name, cohort: cohort,  DOB: dob, hobbies: hobbies}
+    @students <<
+      { name: name,
+        cohort: cohort,
+        DOB: dob,
+        hobbies: hobbies
+      }
     puts "\n Welcome, #{name.split(" ")[0]}!"
-    puts "\n Now we have #{students.count} #{students.count > 1? "students" : "student"}"
+    puts "\n Now we have #{@students.count} #{@students.count > 1? "students" : "student"}"
     puts "\n Please enter the names of the students"
     name = gets.chomp
   end
-  puts students
 end
 
 def print_if_letter(students)
@@ -113,25 +114,31 @@ def cohorts(students)
   end
 end
 
+def print_menu
+  puts "\n 1. Input the students"
+  puts "2. Show the students"
+  puts "9. Exit"
+end
+
+def show_students
+  print_header
+  list
+  print_footer
+end
+
 def interactive_menu
-  students = [{name: "Dr. Hannibal Lecter", cohort: :november}]
+  @students = [{name: "Dr. Hannibal Lecter", cohort: :november}]
   loop do
     #1. Print the menu and ask the user what to do
-    puts "\n 1. Input the students"
-    puts "2. Show the students"
-    puts "9. Exit"
+    print_menu
     #2. read the input and save it into a variable
     selection = gets.chomp
     #3. do what the user has asked
     case selection
     when "1"
-      students = input_students(students)
-      puts students
+      input_students
     when "2"
-      print_header
-      list(students)
-      print_footer(students)
-      cohorts(students)
+      show_students
     when "9"
       exit
     else
