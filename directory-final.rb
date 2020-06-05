@@ -1,16 +1,16 @@
-#students_1 = [
-#{name: "Dr. Hannibal Lecter", cohort: :november},
-#{name: "Darth Vader", cohort: :november},
-#{name: "Nurse Ratched", cohort: :october},
-#{name: "Michael Corleone", cohort: :november},
-#{name: "Alex DeLarge", cohort: :november},
-#{name: "The Wicked Witch of the West", cohort: :november},
-#{name: "Terminator", cohort: :november},
-#{name: "Freddy Krueger", cohort: :november},
-#{name: "The Joker", cohort: :november},
-#{name: "Joffrey Baratheon", cohort: :november},
-#{name: "Norman Bates", cohort: :november}
-#]
+@students = [
+{name: "Dr. Hannibal Lecter", cohort: :november},
+{name: "Darth Vader", cohort: :november},
+{name: "Nurse Ratched", cohort: :october},
+{name: "Michael Corleone", cohort: :november},
+{name: "Alex DeLarge", cohort: :november},
+{name: "The Wicked Witch of the West", cohort: :november},
+{name: "Terminator", cohort: :november},
+{name: "Freddy Krueger", cohort: :november},
+{name: "The Joker", cohort: :november},
+{name: "Joffrey Baratheon", cohort: :november},
+{name: "Norman Bates", cohort: :november}
+]
 
 #first we print the list of students
 def print_header
@@ -18,7 +18,7 @@ def print_header
   puts "--------------------"
 end
 
-def list
+def print_student_list
   @students.each_with_index do |student,index|
     puts "#{index+1}. #{student[:name]}  (#{student[:cohort]} cohort)"
   end
@@ -122,30 +122,31 @@ end
 
 def show_students
   print_header
-  list
+  print_student_list
   print_footer
 end
 
+def process(selection)
+  case selection
+  when "1"
+    input_students
+  when "2"
+    show_students
+  when "9"
+    exit
+  else
+    puts "I don't know what you meant, try again"
+  end
+end
+
 def interactive_menu
-  @students = [{name: "Dr. Hannibal Lecter", cohort: :november}]
   loop do
     #1. Print the menu and ask the user what to do
     print_menu
     #2. read the input and save it into a variable
-    selection = gets.chomp
     #3. do what the user has asked
-    case selection
-    when "1"
-      input_students
-    when "2"
-      show_students
-    when "9"
-      exit
-    else
-      puts "I don't know what you meant, try again"
+    process(gets.chomp)
     #4. repeat from step1
-    selection = gets.chomp
-    end
   end
 end
 #students = input_students
