@@ -44,12 +44,7 @@ def input_students
     #STDIN.gets Hobbies
     puts "Any hobbies? Please split by comma"
     hobbies = STDIN.gets.chomp.split(",")
-    @students <<
-      { name: name,
-        cohort: cohort,
-        DOB: dob,
-        hobbies: hobbies
-      }
+    push_student_name_cohort(name, cohort)
     puts "\n Welcome, #{name.split(" ")[0]}!"
     puts "\n Now we have #{@students.count} #{@students.count > 1? "students" : "student"}"
     puts "\n Please enter the names of the students"
@@ -150,7 +145,7 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+    push_student_name_cohort(name, cohort)
   end
   file.close
 end
@@ -165,6 +160,13 @@ def try_load_students
     puts "Sorry, #{filename} does not exist"
     exit #quit the program
   end
+end
+
+def push_student_name_cohort(name, cohort)
+  if cohort.empty?
+    cohort = :november
+  end
+  @students << {name: name, cohort: cohort}
 end
 
 def interactive_menu
