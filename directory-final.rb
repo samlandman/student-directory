@@ -1,5 +1,7 @@
 @students = []
-@menu = ["1. Input the students", "2. Show the students","3. Save the list to students.csv", "4. Load the list from students.csv","9. Exit"]
+@filename = "students.csv"
+@menu = ["1. Input the students", "2. Show the students","3. Save the list to a file?", "4. Load the list from a file","9. Exit"]
+
 
 #first we print the list of students
 def print_header
@@ -137,8 +139,18 @@ def process(selection)
 end
 
 def save_students
+  puts "Please confirm the file to save to is #{@filename} by saying Yes"
+  answer = STDIN.gets.chomp
+  if answer == "Yes"
+    @filename = @filename
+  else
+  puts "Please write the name of the file"
+    @filename = STDIN.gets.chomp
+  end
+
+
   #open the file for writing
-  file = File.open("students.csv","w")
+  file = File.open(@filename,"w")
   #iterate over the array of students
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
@@ -148,8 +160,8 @@ def save_students
   file.close
 end
 
-def load_students(filename = "students.csv")
-  file = File.open(filename, "r")
+def load_students
+  file = File.open(@filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     push_student_name_cohort(name, cohort)
@@ -160,13 +172,15 @@ end
 def try_load_students
   filename = ARGV.first # first argument from the command line
   if filename.nil?
-    filename = "students.csv"
+    @filename = "students.csv"
+    else
+    @filename = filename
   end
-  if File.exists?(filename)
-    load_students(filename)
-    puts "Loaded #{@students.count} from #{filename}"
+  if File.exists?(@filename)
+    load_students
+    puts "Loaded #{@students.count} from #{@filename}"
   else #if it doesn't exist
-    puts "Sorry, #{filename} does not exist"
+    puts "Sorry, #{@filename} does not exist"
     exit #quit the program
   end
 end
